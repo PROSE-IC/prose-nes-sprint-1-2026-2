@@ -7,9 +7,11 @@ Dashboards por equipe para as devolutivas do Survey Alunos, com historico da Spr
 | Equipe | Projeto | Supervisor(a) | Periodo | Respostas Sprint 1 |
 | --- | --- | --- | --- | --- |
 | T3 | Sistema de Gestao de Comissoes | Awdren | Noturno | 4/6 (66,7%) |
-| T9 | HPV Conecta | Patricia | Noturno | 2/5 (40,0%) |
+| T9 | HPV Conecta | Patricia | Noturno | 3/6 (50,0%) |
 
 Esta publicacao inclui somente T3 e T9. A comparacao contextual usa apenas as equipes com dados carregados na sprint escolhida, nao toda a turma. A participacao parcial deve ser considerada na interpretacao.
+
+O semestre 2026/2 tem 60 estudantes, com seis integrantes por equipe. O cadastro do T9 foi corrigido em 28/09/2026, incluindo a resposta anteriormente nao associada de um integrante. A participacao do historico da Sprint 0 do T9 foi corrigida para 4/6 (66,7%), sem alterar suas notas.
 
 ## Estrutura
 

@@ -5,12 +5,12 @@
 - Projeto: HPV Conecta
 - Professor(a): Patrícia
 - Período: Noturno
-- Integrantes: 5
+- Integrantes: 6
 
 ## Dados carregados
 
-- Sprint 0: historico preservado da publicacao anterior.
-- Sprint 1: 2 respostas de 5 integrantes (40,0%).
+- Sprint 0: 4 respostas de 6 integrantes (66,7%); notas preservadas.
+- Sprint 1: 3 respostas de 6 integrantes (50,0%).
 
 No Streamlit Cloud, use `teams/t9/app.py` como `Main file path`.
 Os relatos sao agregados; nomes e respostas individuais nao estao incluidos.

@@ -3,7 +3,7 @@
 - **Equipe**: T9
 - **Professor(a)**: Patrícia
 - **Período**: Noturno
-- **Participação estimada**: 4/5 (80.0%)
+- **Participação estimada**: 4/6 (66.7%)
 - **Nota do Survey (0-10)**: 8.01
 
 ## Temas
