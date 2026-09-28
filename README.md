@@ -19,7 +19,8 @@ O semestre 2026/2 tem 60 estudantes, com seis integrantes por equipe. O cadastro
 - `teams/t3/app.py` e `teams/t9/app.py`: entradas independentes no Streamlit.
 - `teams/tX/data/relatos/`: relatos agregados de cada sprint.
 - `pdfs/`: relatorios de devolutiva da Sprint 1.
-- `scripts/export_team_pdf.py`: exportador de PDFs a partir dos relatos agregados.
+- `scripts/export_team_pdf.py`: exportador de PDFs a partir dos JSONs agregados locais, com precisao completa.
+- `common/pdf_report.py`: modelo aprovado de cinco paginas, derivado do toolkit.
 - `docs/metodologia-dashboard.md`: criterios de calculo e interpretacao.
 
 Os demais times podem ser acrescentados em `teams/tX/`, reutilizando o mesmo motor, sem alterar os dados dos times ja publicados. O historico da Sprint 0 foi preservado do repositorio anterior.
@@ -40,10 +41,15 @@ streamlit run teams/t3/app.py
 
 ## Exportar PDF
 
+O modelo aprovado tem capa escura e quatro paginas internas claras: resumo,
+evolucao SPACE com comparacao contextual, pontos fortes e pontos de atencao.
+Nao usar o antigo modelo escuro de seis paginas. Os JSONs de metricas ficam
+somente no ambiente local; o PDF publico mostra o total de integrantes, sem nomes.
+
 ```powershell
 pip install -r requirements-pdf.txt
-python scripts/export_team_pdf.py --team T3 --sprint "Sprint 1" --output pdfs/relatorio_T3_sprint_1.pdf
-python scripts/export_team_pdf.py --team T9 --sprint "Sprint 1" --output pdfs/relatorio_T9_sprint_1.pdf
+python scripts/export_team_pdf.py --team T3 --sprint "Sprint 1" --metrics-root ../outputs/nes-sprint1-2026-2/2026-2/teams --output pdfs/relatorio_T3_sprint_1.pdf
+python scripts/export_team_pdf.py --team T9 --sprint "Sprint 1" --metrics-root ../outputs/nes-sprint1-2026-2/2026-2/teams --output pdfs/relatorio_T9_sprint_1.pdf
 ```
 
 ## Dados e privacidade
