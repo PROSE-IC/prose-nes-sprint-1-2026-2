@@ -55,6 +55,7 @@ SPACE_TAG = {
 }
 SPACE_COLORS = [RED, ORANGE, BLUE, "#18c48f"]
 ASSETS_DIR = ROOT / "assets"
+PAGE_SIZE = (210 / 25.4, 297 / 25.4)
 
 QUESTION_DIMENSION_RULES = [
     (r"satisfacao|frustracao|desanimo|tensoes|conflitos|motivacao|fatores externos|bem-estar", "SPACE-W (Satisfaction & Well-Being)"),
@@ -79,6 +80,7 @@ def setup_style() -> None:
             "axes.facecolor": PANEL,
             "figure.facecolor": PAGE,
             "savefig.facecolor": PAGE,
+            "savefig.bbox": None,
             "axes.labelcolor": TEXT,
             "xtick.color": TEXT,
             "ytick.color": TEXT,
@@ -123,32 +125,49 @@ def add_wrapped(
 
 
 def page(title: str, subtitle: str | None = None):
-    fig = plt.figure(figsize=(8.27, 11.69), facecolor=PAGE)
-    fig.text(0.07, 0.925, title, fontsize=25, weight="bold", color=TEXT, va="top")
+    fig = plt.figure(figsize=PAGE_SIZE, facecolor=PAGE)
+    add_fitted_text(fig, 0.07, 0.925, title, 0.86, 25, weight="bold", color=TEXT, va="top")
     if subtitle:
         fig.text(0.07, 0.885, subtitle, fontsize=11, color=MUTED, va="top")
     return fig
 
 
+def add_fitted_text(fig, x: float, y: float, text: str, width: float, size: float, **kwargs):
+    artist = fig.text(x, y, text, fontsize=size, **kwargs)
+    fig.canvas.draw()
+    rendered_width = artist.get_window_extent(fig.canvas.get_renderer()).width
+    available_width = width * fig.bbox.width
+    if rendered_width > available_width:
+        artist.set_fontsize(size * available_width / rendered_width * 0.98)
+    return artist
+
+
+def save_page(pdf: PdfPages, fig) -> None:
+    fig.text(0.07, 0.028, "NES SPACE - Survey Alunos", fontsize=8, color=MUTED, va="bottom")
+    fig.text(0.93, 0.028, str(pdf.get_pagecount() + 1), fontsize=8, color=MUTED, ha="right", va="bottom")
+    # Tight bounding boxes crop each page to a different paper size.
+    pdf.savefig(fig, bbox_inches=None, facecolor=PAGE)
+    plt.close(fig)
+
+
 def render_title_cover(pdf: PdfPages, team_label: str, selected_report) -> None:
-    fig = plt.figure(figsize=(8.27, 11.69), facecolor=PAGE)
-    fig.text(0.07, 0.78, "Relatório NES SPACE", fontsize=31, weight="bold", color=TEXT, va="top")
-    fig.text(0.07, 0.715, f"{team_label.upper()} · {selected_report.sprint} · Survey Alunos", fontsize=16, color=MUTED, va="top")
-    fig.text(0.07, 0.62, "Relatório para compartilhamento com a equipe", fontsize=18, weight="bold", color=TEXT)
+    fig = plt.figure(figsize=PAGE_SIZE, facecolor=PAGE)
+    fig.text(0.07, 0.72, "Relatório NES SPACE", fontsize=31, weight="bold", color=TEXT, va="top")
+    fig.text(0.07, 0.655, f"{team_label.upper()} · {selected_report.sprint} · Survey Alunos", fontsize=16, color=MUTED, va="top")
+    add_fitted_text(fig, 0.07, 0.56, "Relatório para compartilhamento com a equipe", 0.86, 18, weight="bold", color=TEXT)
     add_wrapped(
         fig,
         0.07,
-        0.575,
+        0.515,
         "Material de apoio para conversa sobre produtividade, comunicação, fluxo de trabalho, satisfação e melhoria contínua.",
         width=78,
         size=11,
         color=MUTED,
     )
-    add_logo(fig, ASSETS_DIR / "ufms_original.png", (0.62, 0.765, 0.20, 0.075))
-    add_logo(fig, ASSETS_DIR / "facom_light_transparent.png", (0.84, 0.745, 0.10, 0.105))
+    add_logo(fig, ASSETS_DIR / "ufms_original.png", (0.07, 0.83, 0.26, 0.095))
+    add_logo(fig, ASSETS_DIR / "facom_light_transparent.png", (0.80, 0.81, 0.13, 0.13))
     fig.text(0.07, 0.10, "A leitura deve ser contextual e não representa ranking entre equipes.", fontsize=9.5, color=MUTED)
-    pdf.savefig(fig, bbox_inches="tight")
-    plt.close(fig)
+    save_page(pdf, fig)
 
 
 def cropped_logo(path: Path) -> Image.Image | None:
@@ -175,7 +194,7 @@ def rounded_panel(fig, x: float, y: float, w: float, h: float, color: str = PANE
         (x, y),
         w,
         h,
-        boxstyle="round,pad=0.012,rounding_size=0.018",
+        boxstyle="round,pad=0.007,rounding_size=0.012",
         transform=fig.transFigure,
         facecolor=color,
         edgecolor=edge,
@@ -190,7 +209,7 @@ def metric_card(fig, x: float, y: float, w: float, h: float, label: str, value: 
     rounded_panel(fig, x, y, w, h, PANEL_2)
     fig.add_artist(Rectangle((x, y), 0.008, h, transform=fig.transFigure, color=accent, ec=accent))
     fig.text(x + 0.025, y + h - 0.028, label.upper(), fontsize=8.5, color=MUTED, weight="bold", va="top")
-    fig.text(x + 0.025, y + 0.025, value, fontsize=22, color=TEXT, weight="bold", va="bottom")
+    add_fitted_text(fig, x + 0.025, y + 0.025, value, w - 0.045, 22, color=TEXT, weight="bold", va="bottom")
 
 
 def note_panel(fig, x: float, y: float, w: float, h: float, text: str) -> None:
@@ -345,8 +364,7 @@ def render_cover(pdf: PdfPages, team_dir: Path, team_label: str, reports, select
         fig.text(x_positions[2], y, score_text(report.overall), fontsize=9, color=TEXT)
         y -= 0.028
 
-    pdf.savefig(fig, bbox_inches="tight")
-    plt.close(fig)
+    save_page(pdf, fig)
 
 
 def render_space_page(pdf: PdfPages, reports, selected_report) -> None:
@@ -399,8 +417,7 @@ def render_space_page(pdf: PdfPages, reports, selected_report) -> None:
     ]:
         y = add_wrapped(fig, 0.105, y, f"• {item}", width=96, size=7.8, color=MUTED, line_height=0.019)
 
-    pdf.savefig(fig, bbox_inches="tight")
-    plt.close(fig)
+    save_page(pdf, fig)
 
 
 def render_comparison_page(pdf: PdfPages, team_dir: Path, team_label: str, selected_report) -> None:
@@ -449,8 +466,7 @@ def render_comparison_page(pdf: PdfPages, team_dir: Path, team_label: str, selec
         for i, value in enumerate(mean):
             ax.text(i + width / 2, value + 0.15, f"{value:.2f}", ha="center", fontsize=8, color=TEXT)
 
-    pdf.savefig(fig, bbox_inches="tight")
-    plt.close(fig)
+    save_page(pdf, fig)
 
 
 def render_questions_pages(pdf: PdfPages, team_label: str, selected_report) -> None:
@@ -465,8 +481,7 @@ def render_questions_pages(pdf: PdfPages, team_label: str, selected_report) -> N
         color=MUTED,
     )
     question_cards(fig, "Itens com maior pontuação", selected_report.top5, 0.07, 0.715, "strength")
-    pdf.savefig(fig, bbox_inches="tight")
-    plt.close(fig)
+    save_page(pdf, fig)
 
     fig = page("Pontos de Atenção para Conversa", f"{team_label.upper()} · {selected_report.sprint}")
     add_wrapped(
@@ -479,8 +494,7 @@ def render_questions_pages(pdf: PdfPages, team_label: str, selected_report) -> N
         color=MUTED,
     )
     question_cards(fig, "Itens que merecem investigação", selected_report.bottom5, 0.07, 0.715, "attention")
-    pdf.savefig(fig, bbox_inches="tight")
-    plt.close(fig)
+    save_page(pdf, fig)
 
 
 def export_team_pdf(team: str, sprint: str | None, output: Path) -> Path:
