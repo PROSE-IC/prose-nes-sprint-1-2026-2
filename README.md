@@ -8,16 +8,18 @@ Dashboards por equipe para as devolutivas do Survey Alunos, com historico da Spr
 | --- | --- | --- | --- | --- |
 | T1 | Biblioteca do NDH | Marcio | Vespertino | 6/6 (100,0%) |
 | T3 | Sistema de Gestao de Comissoes | Awdren | Noturno | 4/6 (66,7%) |
+| T6 | RCP extra-hospitalar | Vanessa | Vespertino | 5/6 (83,3%) |
 | T9 | HPV Conecta | Patricia | Noturno | 3/6 (50,0%) |
+| T10 | SCM | Turine | Vespertino | 6/6 (100,0%) |
 
-Esta publicacao inclui T1, T3 e T9. A comparacao contextual usa apenas as equipes com dados carregados na sprint escolhida, nao toda a turma. A participacao parcial deve ser considerada na interpretacao. O T1 foi acrescentado em 29/09/2026; os dados e PDFs previamente publicados de T3 e T9 foram preservados.
+Esta publicacao inclui T1, T3, T6, T9 e T10. A comparacao contextual usa apenas as equipes com dados carregados na sprint escolhida, nao toda a turma. A participacao parcial deve ser considerada na interpretacao. T6 e T10 foram acrescentados em 30/09/2026; os PDFs dos cinco times foram exportados novamente para manter a mesma referencia comparativa. Os dados das equipes ja publicadas foram preservados.
 
 O semestre 2026/2 tem 60 estudantes, com seis integrantes por equipe. O cadastro do T9 foi corrigido em 28/09/2026, incluindo a resposta anteriormente nao associada de um integrante. A participacao do historico da Sprint 0 do T9 foi corrigida para 4/6 (66,7%), sem alterar suas notas.
 
 ## Estrutura
 
 - `common/dashboard_app.py`: motor compartilhado dos dashboards.
-- `teams/t1/app.py`, `teams/t3/app.py` e `teams/t9/app.py`: entradas independentes no Streamlit.
+- `teams/t1/app.py`, `teams/t3/app.py`, `teams/t6/app.py`, `teams/t9/app.py` e `teams/t10/app.py`: entradas independentes no Streamlit.
 - `teams/tX/data/relatos/`: relatos agregados de cada sprint.
 - `pdfs/`: relatorios de devolutiva da Sprint 1.
 - `scripts/export_team_pdf.py`: exportador de PDFs a partir dos JSONs agregados locais, com precisao completa.
@@ -32,7 +34,9 @@ Use este repositorio, branch `main`, e uma das entradas:
 
 - T1: `teams/t1/app.py`
 - T3: `teams/t3/app.py`
+- T6: `teams/t6/app.py`
 - T9: `teams/t9/app.py`
+- T10: `teams/t10/app.py`
 
 Para executar localmente:
 
@@ -52,7 +56,9 @@ somente no ambiente local; o PDF publico mostra o total de integrantes, sem nome
 pip install -r requirements-pdf.txt
 python scripts/export_team_pdf.py --team T1 --sprint "Sprint 1" --metrics-root ../outputs/nes-sprint1-2026-2/2026-2/teams --output pdfs/relatorio_T1_sprint_1.pdf
 python scripts/export_team_pdf.py --team T3 --sprint "Sprint 1" --metrics-root ../outputs/nes-sprint1-2026-2/2026-2/teams --output pdfs/relatorio_T3_sprint_1.pdf
+python scripts/export_team_pdf.py --team T6 --sprint "Sprint 1" --metrics-root ../outputs/nes-sprint1-2026-2/2026-2/teams --output pdfs/relatorio_T6_sprint_1.pdf
 python scripts/export_team_pdf.py --team T9 --sprint "Sprint 1" --metrics-root ../outputs/nes-sprint1-2026-2/2026-2/teams --output pdfs/relatorio_T9_sprint_1.pdf
+python scripts/export_team_pdf.py --team T10 --sprint "Sprint 1" --metrics-root ../outputs/nes-sprint1-2026-2/2026-2/teams --output pdfs/relatorio_T10_sprint_1.pdf
 ```
 
 ## Dados e privacidade
