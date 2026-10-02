@@ -7,34 +7,46 @@ Dashboards por equipe para as devolutivas do Survey Alunos, com historico da Spr
 | Equipe | Projeto | Supervisor(a) | Periodo | Respostas Sprint 1 |
 | --- | --- | --- | --- | --- |
 | T1 | Biblioteca do NDH | Marcio | Vespertino | 6/6 (100,0%) |
+| T2 | Prontuario Eletronico da Psicologia | Vanessa | Vespertino | 4/6 (66,7%) |
 | T3 | Sistema de Gestao de Comissoes | Awdren | Noturno | 4/6 (66,7%) |
-| T6 | RCP extra-hospitalar | Vanessa | Vespertino | 5/6 (83,3%) |
+| T4 | SIGEMAT | Funabashi | Noturno | 4/6 (66,7%) |
+| T5 | Aves do Pantanal | Maria Istela | Vespertino | 3/6 (50,0%) |
+| T6 | RCP extra-hospitalar | Vanessa | Vespertino | 6/6 (100,0%) |
+| T7 | Notifica Saude | Turine | Noturno | 3/6 (50,0%) |
+| T8 | COINS | Maria Istela | Noturno | 2/6 (33,3%) |
 | T9 | HPV Conecta | Patricia | Noturno | 3/6 (50,0%) |
 | T10 | SCM | Turine | Vespertino | 6/6 (100,0%) |
 
-Esta publicacao inclui T1, T3, T6, T9 e T10. A comparacao contextual usa apenas as equipes com dados carregados na sprint escolhida, nao toda a turma. A participacao parcial deve ser considerada na interpretacao. T6 e T10 foram acrescentados em 30/09/2026; os PDFs dos cinco times foram exportados novamente para manter a mesma referencia comparativa. Os dados das equipes ja publicadas foram preservados.
+Publicacao completa atualizada em 02/10/2026: 41 respostas para 60 integrantes (68,3%). Estes totais contam envios classificados por equipe; pseudonimos nao permitem confirmar a identidade individual de cada respondente. A participacao parcial deve ser considerada na interpretacao.
+
+A comparacao contextual usa a media simples dos escores das dez equipes na mesma sprint, incluindo a propria equipe, sem ponderar pelo numero de respostas. Os dez PDFs foram exportados novamente com essa referencia. O T6 passou de cinco para seis respostas apos a confirmacao de uma associacao de nome; os resultados de T1, T3, T9 e T10 permaneceram iguais aos da publicacao anterior.
 
 O semestre 2026/2 tem 60 estudantes, com seis integrantes por equipe. O cadastro do T9 foi corrigido em 28/09/2026, incluindo a resposta anteriormente nao associada de um integrante. A participacao do historico da Sprint 0 do T9 foi corrigida para 4/6 (66,7%), sem alterar suas notas.
 
 ## Estrutura
 
 - `common/dashboard_app.py`: motor compartilhado dos dashboards.
-- `teams/t1/app.py`, `teams/t3/app.py`, `teams/t6/app.py`, `teams/t9/app.py` e `teams/t10/app.py`: entradas independentes no Streamlit.
+- `teams/t1/app.py` ate `teams/t10/app.py`: entradas independentes no Streamlit.
 - `teams/tX/data/relatos/`: relatos agregados de cada sprint.
 - `pdfs/`: relatorios de devolutiva da Sprint 1.
 - `scripts/export_team_pdf.py`: exportador de PDFs a partir dos JSONs agregados locais, com precisao completa.
 - `common/pdf_report.py`: modelo aprovado de cinco paginas, derivado do toolkit.
 - `docs/metodologia-dashboard.md`: criterios de calculo e interpretacao.
 
-Os demais times podem ser acrescentados em `teams/tX/`, reutilizando o mesmo motor, sem alterar os dados dos times ja publicados. O historico da Sprint 0 foi preservado do repositorio anterior.
+Todos os dez times reutilizam o mesmo motor. O historico da Sprint 0 foi preservado do repositorio anterior.
 
 ## Streamlit Community Cloud
 
 Use este repositorio, branch `main`, e uma das entradas:
 
 - T1: `teams/t1/app.py`
+- T2: `teams/t2/app.py`
 - T3: `teams/t3/app.py`
+- T4: `teams/t4/app.py`
+- T5: `teams/t5/app.py`
 - T6: `teams/t6/app.py`
+- T7: `teams/t7/app.py`
+- T8: `teams/t8/app.py`
 - T9: `teams/t9/app.py`
 - T10: `teams/t10/app.py`
 
@@ -65,4 +77,4 @@ python scripts/export_team_pdf.py --team T10 --sprint "Sprint 1" --metrics-root 
 
 Este repositorio contem apenas relatos agregados e os arquivos necessarios ao dashboard. Nomes de estudantes, planilhas de respostas, auditorias de identificacao e ZIPs locais nao sao publicados. Os ZIPs de importacao sao arquivos de trabalho da pesquisa, nao materiais para distribuicao aos alunos.
 
-Os dados da Sprint 1 foram processados com o schema vigente do toolkit. A alternativa "Totalmente desinteressado" foi reconhecida como nivel 1 da escala de motivacao. Respostas vazias permanecem ausentes, sem imputacao. A dimensao Activity nao e calculada nesta versao.
+Os dados da Sprint 1 foram processados com o schema vigente do toolkit. A alternativa "Totalmente desinteressado" foi reconhecida como nivel 1 da escala de motivacao. Respostas vazias permanecem ausentes, sem imputacao. O item condicional sobre discussao da solucao foi calculado somente com respostas validas; no T7, nao houve respostas nesse item, que foi excluido dos pontos fortes e de atencao, sem receber nota zero. A dimensao Activity nao e calculada nesta versao.

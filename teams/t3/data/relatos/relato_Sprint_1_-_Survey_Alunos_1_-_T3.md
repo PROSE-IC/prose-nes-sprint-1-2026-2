@@ -22,7 +22,7 @@
 ## Pontos Fortes percebidos
 - Leitura: itens com maiores notas normalizadas. Em itens inversos, a pontuação já foi invertida antes da exibição.
 - Dificuldades de comunicação na equipe (item inverso): 10.00
-- Discussão da solução com o time: 10.00
+- Discussão da solução com o time (3 respostas válidas): 10.00
 - Satisfação geral [Com a confiança que posso ter em meus colegas]: 9.58
 - Satisfação geral [Com o modo como organiza o trabalho da equipe (Em relação ao professor orientador)]: 9.58
 - Satisfação geral [Com o interesse demonstrado pelo meu trabalho (Em relação ao professor orientador)]: 9.58

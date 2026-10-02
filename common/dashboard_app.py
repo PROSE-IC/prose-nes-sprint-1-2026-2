@@ -417,7 +417,7 @@ def render_team_comparison(all_agg: pd.DataFrame, team_label: str, sprint_sel: L
     reference_teams = sorted(sprint_df["Equipe"].unique(), key=sprint_num)
     st.caption(
         "Equipes disponíveis nesta referência: " + ", ".join(reference_teams)
-        + ". A média considera apenas esses times, não toda a turma."
+        + ". Média simples dos escores por equipe nesta sprint, incluindo a equipe atual."
     )
 
     current_dim = (

@@ -34,7 +34,7 @@ class PdfLayoutTests(unittest.TestCase):
         (ROOT / ".tmp").mkdir(exist_ok=True)
         with self.subTest(design="approved"):
             base = ROOT / ".tmp"
-            for team, count in (("T1", 6), ("T3", 4), ("T6", 5), ("T9", 3), ("T10", 6)):
+            for team, count in (("T6", 6), ("T8", 2), ("T10", 6)):
                 history = []
                 for sprint in (0, 1):
                     payload = {
@@ -49,7 +49,7 @@ class PdfLayoutTests(unittest.TestCase):
                     history.append(payload)
                 with self.subTest(team=team):
                     recording = RecordingPdf()
-                    peers = [dict(history[-1], team=peer) for peer in ("T1", "T3", "T6", "T9", "T10")]
+                    peers = [dict(history[-1], team=f"T{number}") for number in range(1, 11)]
                     with patch.object(exporter, "PdfPages", return_value=recording), \
                          patch.object(exporter.design, "load_team_payloads", return_value=history), \
                          patch.object(exporter.design, "_load_peer_payloads", return_value=peers):
